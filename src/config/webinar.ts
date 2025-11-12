@@ -1,12 +1,45 @@
+import { loadAdminConfig } from "@/utils/adminConfig";
+
+// Configuração padrão do webinar (fallback)
+const DEFAULT_CONFIG = {
+  ano: 2025,
+  mes: 11,
+  dia: 26,
+  hora: 19,
+  minuto: 0,
+};
+
+// Carregar configuração do admin ou usar padrão
+const getWebinarConfig = () => {
+  try {
+    const adminConfig = loadAdminConfig();
+    return adminConfig.webinar;
+  } catch (error) {
+    console.error("Erro ao carregar configuração do admin:", error);
+    return DEFAULT_CONFIG;
+  }
+};
+
 // Configuração do webinar
+// Carrega da área administrativa ou usa valores padrão
 export const WEBINAR_CONFIG = {
   // Data e horário do próximo webinar
-  // ATENÇÃO: Ajuste aqui a data do próximo webinar
-  ano: 2025,
-  mes: 11,       // 11 = Novembro (1-12)
-  dia: 26,       // Dia 26
-  hora: 19,      // Hora do webinar (0-23)
-  minuto: 0,     // Minuto do webinar (0-59)
+  // Funções que retornam os valores atualizados
+  get ano() {
+    return getWebinarConfig().ano;
+  },
+  get mes() {
+    return getWebinarConfig().mes;
+  },
+  get dia() {
+    return getWebinarConfig().dia;
+  },
+  get hora() {
+    return getWebinarConfig().hora;
+  },
+  get minuto() {
+    return getWebinarConfig().minuto;
+  },
   
   // Título do webinar
   titulo: "Do Inbound Tumultuado ao Comercial Qualificado",

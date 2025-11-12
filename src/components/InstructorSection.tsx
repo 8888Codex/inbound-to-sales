@@ -56,28 +56,28 @@ const stats = [
 
 export const InstructorSection = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-primary to-primary-light">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-br from-primary to-primary-light">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
               Quem Está Apresentando
             </h2>
-            <p className="text-xl text-primary-foreground/90">
+            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/90">
               Aprenda com um dos principais especialistas em IA aplicada a negócios
             </p>
           </div>
 
           {/* Instructor Card */}
-          <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border-2 border-white/20 hover:shadow-3xl transition-all duration-300">
+          <div className="bg-card/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-white/20 hover:shadow-3xl transition-all duration-300">
             <div className="grid md:grid-cols-5 gap-0">
               {/* Photo */}
-              <div className="md:col-span-2 bg-gradient-to-br from-primary-light via-primary to-primary-dark p-6 md:p-10 flex items-center justify-center relative overflow-visible min-h-[450px] md:min-h-[550px]">
+              <div className="md:col-span-2 bg-gradient-to-br from-primary-light via-primary to-primary-dark p-4 sm:p-6 md:p-10 flex items-center justify-center relative overflow-visible min-h-[300px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[550px]">
                 {/* Decorative elements */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-accent/10"></div>
                 <div className="relative z-10 w-full flex items-center justify-center">
-                  <div className="relative w-[300px] h-[380px] md:w-[380px] md:h-[480px] flex-shrink-0">
+                  <div className="relative w-[200px] h-[250px] sm:w-[250px] sm:h-[320px] md:w-[300px] md:h-[380px] lg:w-[380px] lg:h-[480px] flex-shrink-0">
                     <div className="w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-2xl hover:scale-105 transition-transform duration-300 bg-white/10">
                       <img
                         src={instructorImageUrl}
@@ -97,7 +97,7 @@ export const InstructorSection = () => {
                       />
                     </div>
                     {/* Badge de verificação posicionado no canto da foto */}
-                    <div className="absolute -bottom-2 -right-2 md:-bottom-3 md:-right-3 bg-gradient-to-br from-accent to-accent-hover text-accent-foreground rounded-full w-16 h-16 md:w-20 md:h-20 flex items-center justify-center font-bold text-2xl md:text-3xl shadow-2xl border-4 border-white animate-pulse z-20">
+                    <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 md:-bottom-3 md:-right-3 bg-gradient-to-br from-accent to-accent-hover text-accent-foreground rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl shadow-2xl border-2 sm:border-3 md:border-4 border-white animate-pulse z-20">
                       ✓
                     </div>
                   </div>
@@ -105,21 +105,21 @@ export const InstructorSection = () => {
               </div>
 
               {/* Content */}
-              <div className="md:col-span-3 p-8 md:p-12">
-                <h3 className="text-3xl md:text-4xl font-bold text-card-foreground mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <div className="md:col-span-3 p-4 sm:p-6 md:p-8 lg:p-12">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-card-foreground mb-2 sm:mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   Marcello Nicolielo
                 </h3>
-                <p className="text-xl md:text-2xl text-primary font-bold mb-6">
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-primary font-bold mb-4 sm:mb-5 md:mb-6">
                   Especialista em Inteligência Artificial Aplicada a Negócios
                 </p>
 
                 {/* Formação */}
-                <div className="space-y-4 mb-6">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-5 md:mb-6">
                   <div>
-                    <p className="text-card-foreground font-bold text-base md:text-lg mb-2">
+                    <p className="text-card-foreground font-bold text-sm sm:text-base md:text-lg mb-1.5 sm:mb-2">
                       Formação e Especializações:
                     </p>
-                    <ul className="text-muted-foreground text-sm md:text-base space-y-1.5 ml-4">
+                    <ul className="text-muted-foreground text-xs sm:text-sm md:text-base space-y-1 sm:space-y-1.5 ml-3 sm:ml-4">
                       <li className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
                         <span>Gestor de Tecnologia pela Universidade Anhembi Morumbi</span>
@@ -140,19 +140,19 @@ export const InstructorSection = () => {
                   </div>
 
                   <div>
-                    <p className="text-card-foreground font-bold text-base md:text-lg mb-2">
+                    <p className="text-card-foreground font-bold text-sm sm:text-base md:text-lg mb-1.5 sm:mb-2">
                       Experiência Profissional:
                     </p>
-                    <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                    <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm md:text-base">
                       <strong className="text-card-foreground font-bold">+ de 20 anos</strong> de atuação em projetos digitais para empresas como <strong className="text-card-foreground">Bradesco, Cushman&Wakefield, Mosaic, deWalt, Black'n'Decker, Sabesp e Metrô SP</strong>.
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-card-foreground font-bold text-base md:text-lg mb-2">
+                    <p className="text-card-foreground font-bold text-sm sm:text-base md:text-lg mb-1.5 sm:mb-2">
                       Ecossistema de Empresas em IA:
                     </p>
-                    <ul className="text-muted-foreground text-sm md:text-base space-y-1.5 ml-4">
+                    <ul className="text-muted-foreground text-xs sm:text-sm md:text-base space-y-1 sm:space-y-1.5 ml-3 sm:ml-4">
                       <li className="flex items-start gap-2">
                         <span className="text-accent mt-1">•</span>
                         <span><strong className="text-card-foreground">Codex.ai</strong> – Consultoria em Inteligência Artificial para negócios</span>
@@ -169,10 +169,10 @@ export const InstructorSection = () => {
                   </div>
 
                   <div>
-                    <p className="text-card-foreground font-bold text-base md:text-lg mb-2">
+                    <p className="text-card-foreground font-bold text-sm sm:text-base md:text-lg mb-1.5 sm:mb-2">
                       Projetos e Iniciativas:
                     </p>
-                    <ul className="text-muted-foreground text-sm md:text-base space-y-1.5 ml-4">
+                    <ul className="text-muted-foreground text-xs sm:text-sm md:text-base space-y-1 sm:space-y-1.5 ml-3 sm:ml-4">
                       <li className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
                         <span>Head de Inovação na <strong className="text-card-foreground">GoshenLand</strong>, liderando aceleradores de IA e Studio</span>
@@ -194,29 +194,29 @@ export const InstructorSection = () => {
                 </div>
 
                 {/* Credentials Badge */}
-                <div className="bg-gradient-to-r from-accent/15 via-accent/10 to-accent/5 border-l-4 border-accent rounded-xl p-5 md:p-6 mb-8 shadow-lg">
-                  <p className="text-card-foreground font-bold text-base md:text-lg mb-2">
+                <div className="bg-gradient-to-r from-accent/15 via-accent/10 to-accent/5 border-l-4 border-accent rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 mb-6 sm:mb-7 md:mb-8 shadow-lg">
+                  <p className="text-card-foreground font-bold text-sm sm:text-base md:text-lg mb-1.5 sm:mb-2">
                     Reconhecimento:
                   </p>
-                  <p className="text-accent font-bold text-lg md:text-xl">
+                  <p className="text-accent font-bold text-sm sm:text-base md:text-lg lg:text-xl">
                     Reconhecido como um dos principais nomes em Inteligência Artificial aplicada a negócios, liderança e carreiras
                   </p>
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {stats.map((stat, index) => (
                     <div
                       key={index}
-                      className="bg-gradient-to-br from-secondary/80 to-secondary/50 rounded-xl p-5 text-center border-2 border-border hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+                      className="bg-gradient-to-br from-secondary/80 to-secondary/50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 text-center border-2 border-border hover:border-primary/50 hover:shadow-lg transition-all duration-300"
                     >
-                      <div className="text-primary mx-auto mb-3 flex justify-center">
+                      <div className="text-primary mx-auto mb-2 sm:mb-3 flex justify-center">
                         <stat.icon />
                       </div>
-                      <div className="text-2xl md:text-3xl font-bold text-card-foreground mb-1">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-card-foreground mb-0.5 sm:mb-1">
                         {stat.value}
                       </div>
-                      <div className="text-xs md:text-sm text-muted-foreground leading-tight font-medium">
+                      <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-tight font-medium">
                         {stat.label}
                       </div>
                     </div>
@@ -227,7 +227,7 @@ export const InstructorSection = () => {
           </div>
 
           {/* Final CTA */}
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-10 md:mt-12">
             <a
               href="#webinar-form"
               onClick={(e) => {
@@ -237,14 +237,14 @@ export const InstructorSection = () => {
                   formElement.scrollIntoView({ behavior: "smooth", block: "center" });
                 }
               }}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-12 py-6 rounded-xl text-xl transition-all duration-300 shadow-2xl hover:shadow-accent/50 hover:scale-105 group"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 rounded-lg sm:rounded-xl text-base sm:text-lg md:text-xl transition-all duration-300 shadow-2xl hover:shadow-accent/50 hover:scale-105 group"
             >
               🎯 Aprender com o Especialista
-              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <p className="text-white/90 mt-4 text-base font-medium">
+            <p className="text-white/90 mt-3 sm:mt-4 text-sm sm:text-base font-medium">
               ⭐ Aprenda com quem lidera o ecossistema de IA no Brasil
             </p>
           </div>

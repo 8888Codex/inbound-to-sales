@@ -57,11 +57,11 @@ export const UrgencySection = () => {
   }, [totalSpots]);
 
   return (
-    <section className="py-16 bg-background border-t border-border">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="py-8 sm:py-12 md:py-16 bg-background border-t border-border">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Urgency Alert */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-gradient-to-br from-urgency/15 via-urgency/10 to-urgency/5 border-2 border-urgency/50 rounded-3xl p-8 md:p-10 text-center shadow-xl relative overflow-hidden">
+        <div className="max-w-4xl mx-auto mb-8 sm:mb-10 md:mb-12">
+          <div className="bg-gradient-to-br from-urgency/15 via-urgency/10 to-urgency/5 border-2 border-urgency/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 text-center shadow-xl relative overflow-hidden">
             {/* Decorative background */}
             <div className="absolute inset-0 bg-gradient-to-r from-urgency/5 via-transparent to-urgency/5 opacity-50"></div>
             
@@ -102,16 +102,16 @@ export const UrgencySection = () => {
                 </div>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
                 {remainingSpots <= 3 ? (
                   <>Apenas <span className="text-urgency animate-pulse">{remainingSpots}</span> vagas restantes!</>
                 ) : (
                   <>Últimas <span className="text-urgency">{remainingSpots}</span> vagas disponíveis</>
                 )}
               </h2>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 font-medium">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 font-medium">
                 Mantemos turmas pequenas para dar atenção individual. 
-                <br className="hidden md:block" />
+                <br className="hidden sm:block" />
                 <span className="text-foreground font-bold">{filledSpots} pessoas</span> já confirmaram presença. Restam apenas <span className="text-urgency font-bold">{remainingSpots} vagas</span>.
               </p>
               
@@ -129,18 +129,18 @@ export const UrgencySection = () => {
         {/* Social Proof */}
         <div className="max-w-5xl mx-auto">
           {/* Números Agregados */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/30 rounded-full px-6 py-3 mb-4">
-              <span className="text-3xl">🚀</span>
-              <span className="font-bold text-primary text-lg">500+ empresas já participaram</span>
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-primary/10 border-2 border-primary/30 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-3 sm:mb-4">
+              <span className="text-2xl sm:text-3xl">🚀</span>
+              <span className="font-bold text-primary text-sm sm:text-base md:text-lg">500+ empresas já participaram</span>
             </div>
           </div>
           
-          <h3 className="text-2xl md:text-3xl font-bold text-center mb-8 text-foreground">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8 text-foreground">
             Empresas que já transformaram seus resultados
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
@@ -159,8 +159,8 @@ export const UrgencySection = () => {
         </div>
 
         {/* Secondary CTA */}
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4 text-lg font-medium">
+        <div className="text-center mt-8 sm:mt-10 md:mt-12">
+          <p className="text-muted-foreground mb-3 sm:mb-4 text-base sm:text-lg font-medium">
             ⚡ Não perca essa oportunidade de transformar seus resultados
           </p>
           <a
@@ -172,7 +172,7 @@ export const UrgencySection = () => {
                 formElement.scrollIntoView({ behavior: "smooth", block: "center" });
               }
             }}
-            className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-10 py-5 rounded-xl text-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 group"
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 rounded-lg sm:rounded-xl text-base sm:text-lg md:text-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 group"
           >
             🎯 Garantir Minha Vaga Agora
             <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

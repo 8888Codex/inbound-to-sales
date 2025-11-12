@@ -20,9 +20,15 @@ export const FloatingCTA = () => {
   }, [isDismissed]);
 
   const handleClick = () => {
-    const formElement = document.getElementById("webinar-form");
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    // No mobile, dispara evento para abrir o dialog
+    if (window.innerWidth < 1024) {
+      window.dispatchEvent(new CustomEvent('openWebinarFormDialog'));
+    } else {
+      // No desktop, faz scroll para o formulário
+      const formElement = document.getElementById("webinar-form");
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
   };
 

@@ -79,50 +79,50 @@ const benefits = [
 
 export const BenefitsSection = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-secondary">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-b from-background to-secondary">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
               O Que Você Vai Aprender
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground">
               Conteúdo prático e direto ao ponto para transformar seus resultados
             </p>
           </div>
 
           {/* Benefits List */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-5 md:space-y-6">
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="group bg-card border-2 border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                className="group bg-card border-2 border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
               >
                 {/* Gradient background on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                <div className="flex gap-4 md:gap-6 relative z-10">
+                <div className="flex gap-3 sm:gap-4 md:gap-6 relative z-10">
                   {/* Icon */}
                   <div className="flex-shrink-0">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg group-hover:shadow-xl text-primary">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg group-hover:shadow-xl text-primary">
                       <benefit.icon />
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 space-y-2">
-                    <h3 className="text-lg md:text-xl font-bold text-card-foreground leading-tight group-hover:text-primary transition-colors">
+                  <div className="flex-1 space-y-1.5 sm:space-y-2 min-w-0">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-card-foreground leading-tight group-hover:text-primary transition-colors">
                       {benefit.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+                    <p className="text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed">
                       {benefit.description}
                     </p>
                   </div>
 
                   {/* Check Icon */}
-                  <div className="flex-shrink-0 hidden md:block">
-                    <CheckCircle2 className="w-7 h-7 text-accent group-hover:scale-110 transition-transform duration-300" />
+                  <div className="flex-shrink-0 hidden sm:block">
+                    <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-accent group-hover:scale-110 transition-transform duration-300" />
                   </div>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export const BenefitsSection = () => {
           </div>
 
           {/* CTA */}
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-10 md:mt-12">
             <a
               href="#webinar-form"
               onClick={(e) => {
@@ -140,14 +140,14 @@ export const BenefitsSection = () => {
                   formElement.scrollIntoView({ behavior: "smooth", block: "center" });
                 }
               }}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-10 py-5 rounded-xl text-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 group"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 rounded-lg sm:rounded-xl text-base sm:text-lg md:text-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 group"
             >
               🎯 Garantir Minha Vaga Agora
-              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <p className="text-muted-foreground text-sm mt-3">
+            <p className="text-muted-foreground text-xs sm:text-sm mt-2 sm:mt-3">
               ✅ Sem compromisso • 100% gratuito
             </p>
           </div>

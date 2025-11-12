@@ -27,7 +27,12 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export const WebinarForm = () => {
+interface WebinarFormProps {
+  onSuccess?: () => void;
+  hideHeader?: boolean;
+}
+
+export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
   const { toast } = useToast();
@@ -99,6 +104,13 @@ export const WebinarForm = () => {
         setTouchedFields(new Set());
       }
 
+      // Chamar callback de sucesso se fornecido
+      if (onSuccess) {
+        setTimeout(() => {
+          onSuccess();
+        }, 1500); // Aguardar um pouco para o usuário ver a mensagem de sucesso
+      }
+
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
       toast({
@@ -112,19 +124,21 @@ export const WebinarForm = () => {
   };
 
   return (
-    <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-white/20 hover:shadow-3xl transition-all duration-300">
-      {/* Header with gradient accent */}
-      <div className="text-center mb-8 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-primary/5 to-accent/10 rounded-2xl blur-xl -z-10"></div>
-        <h3 className="text-2xl md:text-3xl font-bold text-card-foreground mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          Garantir meu lugar no webinar
-        </h3>
-        <p className="text-muted-foreground text-sm md:text-base">
-          Preencha os dados abaixo para se inscrever
-        </p>
-      </div>
+    <div className={`${hideHeader ? '' : 'bg-card/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 border-2 border-white/20 hover:shadow-3xl transition-all duration-300'}`}>
+      {/* Header with gradient accent - Oculto quando hideHeader é true */}
+      {!hideHeader && (
+        <div className="text-center mb-4 sm:mb-6 md:mb-8 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-primary/5 to-accent/10 rounded-xl sm:rounded-2xl blur-xl -z-10"></div>
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-card-foreground mb-2 sm:mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Garantir meu lugar no webinar
+          </h3>
+          <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
+            Preencha os dados abaixo para se inscrever
+          </p>
+        </div>
+      )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Nome */}
         <div className="space-y-2">
           <Label htmlFor="name" className="text-card-foreground font-semibold text-sm">
@@ -137,7 +151,7 @@ export const WebinarForm = () => {
               {...register("name", {
                 onBlur: () => setTouchedFields(prev => new Set(prev).add("name")),
               })}
-              className={`h-12 text-base pr-10 transition-all ${
+              className={`h-11 sm:h-12 text-base pr-10 transition-all ${
                 errors.name 
                   ? "border-destructive focus-visible:ring-destructive" 
                   : watchedValues.name && watchedValues.name.length >= 3 && !errors.name
@@ -176,7 +190,7 @@ export const WebinarForm = () => {
               {...register("email", {
                 onBlur: () => setTouchedFields(prev => new Set(prev).add("email")),
               })}
-              className={`h-12 text-base pr-10 transition-all ${
+              className={`h-11 sm:h-12 text-base pr-10 transition-all ${
                 errors.email 
                   ? "border-destructive focus-visible:ring-destructive" 
                   : watchedValues.email && !errors.email && watchedValues.email.includes("@")
@@ -230,7 +244,7 @@ export const WebinarForm = () => {
               {...register("phone", {
                 onBlur: () => setTouchedFields(prev => new Set(prev).add("phone")),
               })}
-              className={`h-12 text-base pr-10 transition-all ${
+              className={`h-11 sm:h-12 text-base pr-10 transition-all ${
                 errors.phone 
                   ? "border-destructive focus-visible:ring-destructive" 
                   : watchedValues.phone && watchedValues.phone.length >= 10 && !errors.phone
@@ -264,7 +278,7 @@ export const WebinarForm = () => {
           <Label className="text-card-foreground font-semibold text-sm">Qual é seu CRM?</Label>
           <RadioGroup
             onValueChange={(value) => setValue("crm", value as any)}
-            className="grid grid-cols-2 gap-3"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
             {["HubSpot", "Pipedrive", "RD Station", "Salesforce", "Outro"].map((crm, idx) => (
               <div
@@ -301,7 +315,7 @@ export const WebinarForm = () => {
           </Label>
           <RadioGroup
             onValueChange={(value) => setValue("leadsPerMonth", value as any)}
-            className="grid grid-cols-2 gap-3"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
             {["0-50", "51-150", "151-300", "300+"].map((range) => (
               <div
@@ -328,9 +342,9 @@ export const WebinarForm = () => {
         </div>
 
         {/* Benefícios antes do botão */}
-        <div className="bg-accent/5 border-2 border-accent/20 rounded-xl p-4 space-y-2">
-          <p className="font-bold text-card-foreground text-sm mb-2">✨ Ao se inscrever, você receberá:</p>
-          <div className="space-y-1.5 text-xs text-muted-foreground">
+        <div className="bg-accent/5 border-2 border-accent/20 rounded-lg sm:rounded-xl p-3 sm:p-4 space-y-1.5 sm:space-y-2">
+          <p className="font-bold text-card-foreground text-xs sm:text-sm mb-1.5 sm:mb-2">✨ Ao se inscrever, você receberá:</p>
+          <div className="space-y-1 sm:space-y-1.5 text-[11px] sm:text-xs text-muted-foreground">
             <p className="flex items-start gap-2">
               <span className="text-accent mt-0.5">✓</span>
               <span>Acesso ao webinar ao vivo + gravação</span>
@@ -354,7 +368,7 @@ export const WebinarForm = () => {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gradient-to-r from-accent to-accent-hover hover:from-accent-hover hover:to-accent text-accent-foreground font-bold py-7 text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
+          className="w-full bg-gradient-to-r from-accent to-accent-hover hover:from-accent-hover hover:to-accent text-accent-foreground font-bold py-5 sm:py-6 md:py-7 text-base sm:text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
           {isSubmitting ? (

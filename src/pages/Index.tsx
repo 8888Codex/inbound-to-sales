@@ -8,10 +8,12 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { FinalCTASection } from "@/components/FinalCTASection";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { InscricaoNotification } from "@/components/InscricaoNotification";
+import { TrackingScripts } from "@/components/TrackingScripts";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
+      <TrackingScripts />
       <Hero />
       <UrgencySection />
       <BenefitsSection />
