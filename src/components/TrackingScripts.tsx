@@ -4,8 +4,8 @@ import { loadAdminConfig } from "@/utils/adminConfig";
 // Declarações de tipo para scripts de tracking
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
-    dataLayer?: any[];
+    fbq?: (...args: unknown[]) => void;
+    dataLayer?: Record<string, unknown>[];
   }
 }
 
@@ -47,7 +47,7 @@ export const TrackingScripts = () => {
     }
 
     // Google Tag Manager
-    if (tracking.googleTagManagerId && !window.dataLayer?.some((item: any) => item['gtm.start'])) {
+    if (tracking.googleTagManagerId && !window.dataLayer?.some((item: Record<string, unknown>) => item['gtm.start'])) {
       const gtmScript = document.createElement("script");
       gtmScript.innerHTML = `
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

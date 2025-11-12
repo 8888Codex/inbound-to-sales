@@ -277,21 +277,23 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
         <div className="space-y-3">
           <Label className="text-card-foreground font-semibold text-sm">Qual é seu CRM?</Label>
           <RadioGroup
-            onValueChange={(value) => setValue("crm", value as any)}
+            onValueChange={(value) => setValue("crm", value as "hubspot" | "pipedrive" | "rdstation" | "salesforce" | "outro")}
             className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
-            {["HubSpot", "Pipedrive", "RD Station", "Salesforce", "Outro"].map((crm, idx) => (
+            {["HubSpot", "Pipedrive", "RD Station", "Salesforce", "Outro"].map((crm, idx) => {
+              const crmValues: ("hubspot" | "pipedrive" | "rdstation" | "salesforce" | "outro")[] = ["hubspot", "pipedrive", "rdstation", "salesforce", "outro"];
+              return (
               <div
                 key={crm}
                 className={`flex items-center space-x-2 p-3 rounded-lg border-2 transition-all cursor-pointer hover:bg-primary/5 ${
-                  watch("crm") === ["hubspot", "pipedrive", "rdstation", "salesforce", "outro"][idx]
+                  watch("crm") === crmValues[idx]
                     ? "border-primary bg-primary/10"
                     : "border-border hover:border-primary/50"
                 }`}
-                onClick={() => setValue("crm", ["hubspot", "pipedrive", "rdstation", "salesforce", "outro"][idx] as any)}
+                onClick={() => setValue("crm", crmValues[idx])}
               >
                 <RadioGroupItem
-                  value={["hubspot", "pipedrive", "rdstation", "salesforce", "outro"][idx]}
+                  value={crmValues[idx]}
                   id={`crm-${idx}`}
                   className="flex-shrink-0"
                 />
@@ -299,7 +301,8 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
                   {crm}
                 </Label>
               </div>
-            ))}
+            );
+            })}
           </RadioGroup>
           {errors.crm && (
             <p className="text-destructive text-sm flex items-center gap-1">
@@ -314,10 +317,10 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
             Quantos leads você gera/mês?
           </Label>
           <RadioGroup
-            onValueChange={(value) => setValue("leadsPerMonth", value as any)}
+            onValueChange={(value) => setValue("leadsPerMonth", value as "0-50" | "51-150" | "151-300" | "300+")}
             className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
-            {["0-50", "51-150", "151-300", "300+"].map((range) => (
+            {(["0-50", "51-150", "151-300", "300+"] as const).map((range) => (
               <div
                 key={range}
                 className={`flex items-center space-x-2 p-3 rounded-lg border-2 transition-all cursor-pointer hover:bg-primary/5 ${
@@ -325,7 +328,7 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
                     ? "border-primary bg-primary/10"
                     : "border-border hover:border-primary/50"
                 }`}
-                onClick={() => setValue("leadsPerMonth", range as any)}
+                onClick={() => setValue("leadsPerMonth", range)}
               >
                 <RadioGroupItem value={range} id={`leads-${range}`} className="flex-shrink-0" />
                 <Label htmlFor={`leads-${range}`} className="font-medium cursor-pointer text-sm flex-1">

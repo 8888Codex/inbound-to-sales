@@ -11,7 +11,7 @@ declare module 'ogl' {
     constructor(gl: WebGLRenderingContext | WebGL2RenderingContext, options: {
       vertex: string;
       fragment: string;
-      uniforms?: any;
+      uniforms?: Record<string, unknown>;
     });
   }
 
