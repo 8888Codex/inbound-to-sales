@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { SuccessModal } from "@/components/SuccessModal";
+import { triggerInscriptionNotification } from "@/utils/inscriptionEvents";
+import { getCachedLocation, formatLocation } from "@/utils/geolocation";
 
 const formSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres").max(100),
@@ -35,6 +38,7 @@ interface WebinarFormProps {
 export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const { toast } = useToast();
   
   const {
@@ -91,12 +95,6 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
         throw new Error(`Erro ao enviar dados: ${response.status}`);
       }
 
-      // Sucesso
-      toast({
-        title: "Inscrição confirmada! 🎉",
-        description: "Você receberá um e-mail com os detalhes do webinar.",
-      });
-
       // Resetar formulário após sucesso
       const form = document.querySelector('form') as HTMLFormElement;
       if (form) {
@@ -104,11 +102,19 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
         setTouchedFields(new Set());
       }
 
-      // Chamar callback de sucesso se fornecido
+      // Obter localização do usuário para a notificação
+      const location = getCachedLocation();
+      const cidade = location ? formatLocation(location) : "São Paulo, SP";
+
+      // Disparar notificação de inscrição imediatamente
+      triggerInscriptionNotification(data.name, cidade);
+
+      // Mostrar modal de sucesso
+      setShowSuccessModal(true);
+
+      // Chamar callback de sucesso se fornecido (após fechar o modal)
       if (onSuccess) {
-        setTimeout(() => {
-          onSuccess();
-        }, 1500); // Aguardar um pouco para o usuário ver a mensagem de sucesso
+        // O callback será chamado quando o modal for fechado
       }
 
     } catch (error) {
@@ -410,6 +416,20 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
           </div>
         </div>
       </form>
+
+      {/* Modal de sucesso */}
+      <SuccessModal 
+        open={showSuccessModal} 
+        onOpenChange={(open) => {
+          setShowSuccessModal(open);
+          if (!open && onSuccess) {
+            // Chamar callback quando o modal for fechado
+            setTimeout(() => {
+              onSuccess();
+            }, 300);
+          }
+        }} 
+      />
     </div>
   );
 };

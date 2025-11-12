@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CheckCircle2, X } from "lucide-react";
-import { getVisitorPool, getCachedLocation, initializeGeolocation } from "@/utils/geolocation";
+import { getVisitorPool, getCachedLocation, initializeGeolocation, addVisitorToPool } from "@/utils/geolocation";
+import { listenToInscriptions } from "@/utils/inscriptionEvents";
 
 const nomesFake = [
   "Carlos Silva",
@@ -44,6 +45,37 @@ export const InscricaoNotification = () => {
   // Inicializa a geolocalização quando o componente monta
   useEffect(() => {
     initializeGeolocation();
+  }, []);
+
+  // Escuta eventos de inscrição real do usuário
+  useEffect(() => {
+    const unsubscribe = listenToInscriptions((data) => {
+      // Adiciona o visitante ao pool
+      addVisitorToPool(data.nome);
+
+      // Cria notificação imediata com os dados reais
+      setNextId((prevId) => {
+        const newId = prevId;
+        const newNotification: Notification = {
+          id: newId,
+          nome: data.nome,
+          cidade: data.cidade,
+          tempo: "agora mesmo",
+        };
+
+        // Limpa notificações anteriores e mostra a nova
+        setNotifications([newNotification]);
+
+        // Remove automaticamente após 8 segundos
+        setTimeout(() => {
+          setNotifications((prev) => prev.filter((n) => n.id !== newNotification.id));
+        }, 8000);
+
+        return newId + 1;
+      });
+    });
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
