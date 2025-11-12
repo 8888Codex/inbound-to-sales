@@ -51,7 +51,7 @@ export const Hero = () => {
           </div>
 
           {/* Right Side - Form */}
-          <div className="lg:mt-0">
+          <div id="webinar-form" className="lg:mt-0">
             <WebinarForm />
           </div>
         </div>
