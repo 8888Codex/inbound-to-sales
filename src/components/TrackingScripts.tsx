@@ -34,6 +34,7 @@ export const TrackingScripts = () => {
       // Usar o código oficial do Facebook Pixel
       // O código abaixo inicializa o fbq e adiciona init e PageView à fila
       // Quando o script externo carregar, ele processará a fila automaticamente
+      // Isso garante que o evento PageView seja rastreado corretamente sem erros
       const script = document.createElement("script");
       script.innerHTML = `
         !function(f,b,e,v,n,t,s)
