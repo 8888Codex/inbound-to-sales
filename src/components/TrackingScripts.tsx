@@ -4,7 +4,15 @@ import { loadAdminConfig } from "@/utils/adminConfig";
 // Declarações de tipo para scripts de tracking
 declare global {
   interface Window {
-    fbq?: (...args: unknown[]) => void;
+    fbq?: {
+      (...args: unknown[]): void;
+      callMethod?: (...args: unknown[]) => void;
+      queue?: unknown[][];
+      loaded?: boolean;
+      version?: string;
+      push?: (...args: unknown[]) => void;
+    };
+    _fbq?: Window['fbq'];
     dataLayer?: Record<string, unknown>[];
   }
 }
@@ -23,6 +31,9 @@ export const TrackingScripts = () => {
 
     // Meta Pixel (Facebook Ads)
     if (tracking.metaAdsPixelId && !window.fbq) {
+      // Usar o código oficial do Facebook Pixel
+      // O código abaixo inicializa o fbq e adiciona init e PageView à fila
+      // Quando o script externo carregar, ele processará a fila automaticamente
       const script = document.createElement("script");
       script.innerHTML = `
         !function(f,b,e,v,n,t,s)
