@@ -8,52 +8,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 17% 98%;
-    --foreground: 217 33% 17%;
+    /* Background sofisticado - tons neutros elegantes */
+    --background: 240 20% 99%;
+    --foreground: 240 10% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 217 33% 17%;
+    --card-foreground: 240 10% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 217 33% 17%;
+    --popover-foreground: 240 10% 15%;
 
-    --primary: 217 91% 35%;
+    /* Primary - Índigo sofisticado e premium */
+    --primary: 262 52% 47%;
     --primary-foreground: 0 0% 100%;
     
-    --primary-light: 217 91% 60%;
-    --primary-dark: 217 91% 25%;
+    --primary-light: 262 52% 60%;
+    --primary-dark: 262 52% 35%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 217 33% 17%;
+    /* Secondary - Tons neutros elegantes */
+    --secondary: 240 15% 96%;
+    --secondary-foreground: 240 10% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 217 20% 51%;
+    --muted: 240 12% 95%;
+    --muted-foreground: 240 8% 45%;
 
-    --accent: 142 76% 36%;
+    /* Accent - Coral/Amber sofisticado para CTAs */
+    --accent: 12 76% 61%;
     --accent-foreground: 0 0% 100%;
     
-    --accent-hover: 142 76% 30%;
+    --accent-hover: 12 76% 55%;
     
-    --urgency: 25 95% 53%;
+    /* Urgency - Laranja elegante */
+    --urgency: 24 95% 53%;
     --urgency-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 35%;
+    --border: 240 12% 90%;
+    --input: 240 12% 90%;
+    --ring: 262 52% 47%;
 
     --radius: 0.75rem;
     
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 35%) 0%, hsl(217 91% 45%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 17% 99%) 100%);
+    /* Gradientes sofisticados com novas cores */
+    --gradient-hero: linear-gradient(135deg, hsl(262 52% 47%) 0%, hsl(262 52% 60%) 50%, hsl(262 52% 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(240 20% 99%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(12 76% 61%) 0%, hsl(12 76% 55%) 100%);
     
-    --shadow-soft: 0 2px 8px -2px hsl(217 33% 17% / 0.08);
-    --shadow-medium: 0 4px 16px -4px hsl(217 33% 17% / 0.12);
-    --shadow-strong: 0 8px 32px -8px hsl(217 33% 17% / 0.16);
+    --shadow-soft: 0 2px 8px -2px hsl(240 10% 15% / 0.08);
+    --shadow-medium: 0 4px 16px -4px hsl(240 10% 15% / 0.12);
+    --shadow-strong: 0 8px 32px -8px hsl(240 10% 15% / 0.16);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     --spacing-section: 5rem;
 
@@ -128,5 +136,114 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Animações customizadas sofisticadas */
+@layer utilities {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 0.5s;
+  }
+
+  .animate-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
   }
 }

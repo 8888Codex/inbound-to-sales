@@ -6,6 +6,8 @@ import { InstructorSection } from "@/components/InstructorSection";
 import { FAQSection } from "@/components/FAQSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { FinalCTASection } from "@/components/FinalCTASection";
+import { FloatingCTA } from "@/components/FloatingCTA";
+import { InscricaoNotification } from "@/components/InscricaoNotification";
 
 const Index = () => {
   return (
@@ -18,6 +20,8 @@ const Index = () => {
       <FAQSection />
       <TestimonialsSection />
       <FinalCTASection />
+      <FloatingCTA />
+      <InscricaoNotification />
     </main>
   );
 };

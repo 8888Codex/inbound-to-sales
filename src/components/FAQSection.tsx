@@ -1,10 +1,17 @@
-import { HelpCircle } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+// Ícone SVG customizado sofisticado
+const HelpIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
+    <path d="M24 18C24 16.3431 25.3431 15 27 15C28.6569 15 30 16.3431 30 18C30 19.6569 28.6569 21 27 21H24M24 27H24.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
 
 const faqs = [
   {
@@ -38,7 +45,9 @@ export const FAQSection = () => {
     <section className="py-20 px-4 md:px-6 bg-gradient-to-br from-background via-muted/20 to-background">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <HelpCircle className="w-12 h-12 mx-auto mb-4 text-primary" />
+          <div className="w-12 h-12 mx-auto mb-4 text-primary flex items-center justify-center">
+            <HelpIcon />
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Perguntas Frequentes
           </h2>
@@ -52,12 +61,12 @@ export const FAQSection = () => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="bg-card border border-border rounded-xl px-6 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-card border-2 border-border rounded-2xl px-6 md:px-8 shadow-md hover:shadow-xl transition-all duration-300 hover:border-primary/50 group"
             >
-              <AccordionTrigger className="text-left text-foreground font-semibold hover:text-primary">
+              <AccordionTrigger className="text-left text-foreground font-bold text-lg md:text-xl hover:text-primary py-6 transition-colors">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
+              <AccordionContent className="text-muted-foreground text-base md:text-lg leading-relaxed pb-6">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

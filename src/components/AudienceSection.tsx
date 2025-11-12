@@ -1,4 +1,29 @@
-import { Check, X } from "lucide-react";
+// Ícones SVG customizados sofisticados
+const CheckIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const CheckCircleIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2"/>
+    <path d="M10 16L14 20L22 12" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const XIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const XCircleIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 12L20 20M20 12L12 20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
 const idealAudience = [
   "Investe em conteúdo, SEO, webinars (inbound marketing)",
@@ -32,42 +57,51 @@ export const AudienceSection = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Ideal Audience */}
-            <div className="bg-gradient-to-br from-accent/5 to-accent/10 border-2 border-accent/30 rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center">
-                  <Check className="w-7 h-7 text-accent-foreground" strokeWidth={3} />
+            <div className="bg-gradient-to-br from-accent/10 via-accent/5 to-accent/10 border-2 border-accent/40 rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+              {/* Decorative background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 opacity-50"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-14 h-14 bg-gradient-to-br from-accent to-accent-hover rounded-full flex items-center justify-center shadow-lg text-accent-foreground">
+                    <CheckCircleIcon />
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                    Você é o público certo se:
+                  </h3>
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">
-                  Você é o público certo se:
-                </h3>
-              </div>
 
-              <ul className="space-y-4">
-                {idealAudience.map((item, index) => (
-                  <li key={index} className="flex gap-3">
-                    <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
+                <ul className="space-y-5">
+                  {idealAudience.map((item, index) => (
+                    <li key={index} className="flex gap-4 items-start">
+                      <div className="text-accent flex-shrink-0 mt-0.5">
+                        <CheckIcon />
+                      </div>
+                      <span className="text-foreground text-base md:text-lg font-medium leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             {/* Not For You */}
-            <div className="bg-gradient-to-br from-muted to-muted/50 border-2 border-border rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-muted-foreground/20 rounded-full flex items-center justify-center">
-                  <X className="w-7 h-7 text-muted-foreground" strokeWidth={3} />
+            <div className="bg-gradient-to-br from-muted via-muted/80 to-muted/60 border-2 border-border rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-14 h-14 bg-muted-foreground/20 rounded-full flex items-center justify-center border-2 border-muted-foreground/30 text-muted-foreground">
+                  <XCircleIcon />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                   Não é para você se:
                 </h3>
               </div>
 
-              <ul className="space-y-4">
+              <ul className="space-y-5">
                 {notForYou.map((item, index) => (
-                  <li key={index} className="flex gap-3">
-                    <X className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                    <span className="text-muted-foreground">{item}</span>
+                  <li key={index} className="flex gap-4 items-start">
+                    <div className="text-muted-foreground flex-shrink-0 mt-0.5">
+                      <XIcon />
+                    </div>
+                    <span className="text-muted-foreground text-base md:text-lg font-medium leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -75,20 +109,30 @@ export const AudienceSection = () => {
           </div>
 
           {/* Bottom Message */}
-          <div className="mt-12 text-center bg-card border border-border rounded-xl p-8">
-            <p className="text-lg text-card-foreground mb-4">
-              <strong>Se você se identificou com o perfil ideal,</strong> este webinar pode ser 
+          <div className="mt-12 text-center bg-gradient-to-br from-card to-secondary/50 border-2 border-primary/20 rounded-2xl p-8 md:p-10 shadow-lg hover:shadow-xl transition-all duration-300">
+            <p className="text-lg md:text-xl text-card-foreground mb-6 font-medium leading-relaxed">
+              <strong className="text-primary font-bold">Se você se identificou com o perfil ideal,</strong> este webinar pode ser 
               o divisor de águas para escalar sua operação comercial.
             </p>
             <a
-              href="#hero"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors"
+              href="#webinar-form"
+              onClick={(e) => {
+                e.preventDefault();
+                const formElement = document.getElementById("webinar-form");
+                if (formElement) {
+                  formElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+              }}
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-accent-foreground font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
             >
-              Voltar ao formulário
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              🎯 Sim, Quero Participar do Webinar
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
+            <p className="text-muted-foreground text-sm mt-3">
+              ⏱️ Restam poucas vagas para esta turma
+            </p>
           </div>
         </div>
       </div>
