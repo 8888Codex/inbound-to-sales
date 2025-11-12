@@ -38,7 +38,8 @@ jobs:
           fi
           echo "Build successful"
 
-      - name: Deploy to Vercel
+      - name: Deploy to Vercel (secrets configurados)
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -47,4 +48,11 @@ jobs:
           vercel-args: '--prod'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           scope: ${{ secrets.VERCEL_ORG_ID }}
+      
+      - name: Nota sobre Deploy
+        if: ${{ secrets.VERCEL_TOKEN == '' }}
+        run: |
+          echo "⚠️ Secrets da Vercel não configurados."
+          echo "O deploy será feito automaticamente pela integração nativa da Vercel."
+          echo "Para configurar deploy via GitHub Actions, veja: .github/SECRETS_SETUP.md"
 
