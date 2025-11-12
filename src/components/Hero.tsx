@@ -182,7 +182,7 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right Side - Form com animação (apenas desktop) */}
+          {/* Right Side - Form com animação (apenas desktop - OCULTO NO MOBILE) */}
           <div id="webinar-form" className={`hidden lg:block lg:order-last lg:mt-0 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <WebinarForm />
           </div>
