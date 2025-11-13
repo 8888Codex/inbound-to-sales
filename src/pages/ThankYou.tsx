@@ -30,30 +30,30 @@ const ThankYou = () => {
         distortion={0.1}
       />
 
-      {/* Content Container */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
+      {/* Content Container - Padding reduzido no mobile */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4 md:p-6 lg:p-8">
         <div className="w-full max-w-3xl">
-          {/* Glassmorphism Container */}
-          <div className="relative bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
+          {/* Glassmorphism Container - Compacto no mobile */}
+          <div className="relative bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-xl sm:rounded-2xl md:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-white/50 to-blue-50/50 dark:from-green-950/20 dark:via-gray-900/50 dark:to-blue-950/20 pointer-events-none"></div>
             
-            {/* Animated Background Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
+            {/* Animated Background Particles - Oculto no mobile */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
               <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-green-400/10 rounded-full blur-3xl animate-pulse"></div>
               <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-blue-400/10 rounded-full blur-3xl animate-pulse animate-delay-400"></div>
             </div>
 
-            {/* Content */}
-            <div className="relative z-10 p-6 sm:p-8 md:p-12">
+            {/* Content - Padding reduzido no mobile */}
+            <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-12">
               <ThankYouContent isModal={false} />
             </div>
           </div>
 
-          {/* Footer Note */}
-          <div className="text-center mt-6 text-white/80 text-sm">
+          {/* Footer Note - Menor no mobile */}
+          <div className="text-center mt-3 sm:mt-4 md:mt-6 text-white/80 text-xs sm:text-sm">
             <p>
-              Dúvidas? Entre em contato através do WhatsApp que você informou no cadastro.
+              Dúvidas? Entre em contato pelo WhatsApp.
             </p>
           </div>
         </div>
