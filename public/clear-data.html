@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Limpar Dados Analytics</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #dc2626;
+        }
+        .success {
+            background: #10b981;
+        }
+        .success:hover {
+            background: #059669;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧹 Limpeza de Dados Analytics</h1>
+        <p>Use esta página para limpar os dados de analytics do localStorage.</p>
+        
+        <div id="current" class="info" style="display:block; margin-bottom: 20px;">
+            <strong>Dados Atuais:</strong><br>
+            <span id="data-info">Carregando...</span>
+        </div>
+        
+        <button onclick="clearData()">🗑️ Limpar Todos os Dados</button>
+        <button class="success" onclick="location.href='/admin'">↩️ Voltar ao Admin</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Mostrar dados atuais
+        function showCurrentData() {
+            const data = localStorage.getItem('webinar_analytics');
+            const info = document.getElementById('data-info');
+            
+            if (!data) {
+                info.innerHTML = '❌ Nenhum dado encontrado';
+                return;
+            }
+            
+            try {
+                const parsed = JSON.parse(data);
+                info.innerHTML = `
+                    ✅ Dados encontrados:<br>
+                    - Visitas: ${parsed.visits?.length || 0}<br>
+                    - Inícios de formulário: ${parsed.formStarts?.length || 0}<br>
+                    - Cadastros: ${parsed.formCompletions?.length || 0}<br>
+                    - Tamanho total: ${(data.length / 1024).toFixed(2)} KB
+                `;
+            } catch (e) {
+                info.innerHTML = '⚠️ Dados corrompidos: ' + e.message;
+            }
+        }
+        
+        function clearData() {
+            localStorage.removeItem('webinar_analytics');
+            localStorage.removeItem('webinar_session_id');
+            localStorage.removeItem('webinar_session_start');
+            sessionStorage.clear();
+            
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.style.background = '#d1fae5';
+            result.style.color = '#065f46';
+            result.innerHTML = '✅ <strong>Dados limpos com sucesso!</strong><br>Recarregue a página admin agora.';
+            
+            showCurrentData();
+        }
+        
+        showCurrentData();
+    </script>
+</body>
+</html>

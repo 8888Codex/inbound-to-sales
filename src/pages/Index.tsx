@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Hero } from "@/components/Hero";
 import { UrgencySection } from "@/components/UrgencySection";
 import { BenefitsSection } from "@/components/BenefitsSection";
@@ -9,8 +10,18 @@ import { FinalCTASection } from "@/components/FinalCTASection";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { InscricaoNotification } from "@/components/InscricaoNotification";
 import { TrackingScripts } from "@/components/TrackingScripts";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 const Index = () => {
+  const visitId = usePageTracking();
+
+  // Armazenar visitId no sessionStorage para uso no formulário
+  useEffect(() => {
+    if (visitId) {
+      sessionStorage.setItem('current_visit_id', visitId);
+    }
+  }, [visitId]);
+
   return (
     <main className="min-h-screen">
       <TrackingScripts />

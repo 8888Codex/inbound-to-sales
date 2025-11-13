@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -10,7 +10,9 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { SuccessModal } from "@/components/SuccessModal";
 import { triggerInscriptionNotification } from "@/utils/inscriptionEvents";
-import { getCachedLocation, formatLocation } from "@/utils/geolocation";
+import { getCachedLocation, formatLocation, fetchVisitorLocation } from "@/utils/geolocation";
+import { trackFormStart, trackFormCompletion } from "@/utils/analytics";
+import { getDeviceData } from "@/utils/deviceDetection";
 
 const formSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres").max(100),
@@ -20,6 +22,15 @@ const formSchema = z.object({
     .min(10, "WhatsApp deve ter pelo menos 10 dígitos")
     .max(15, "WhatsApp inválido")
     .regex(/^[\d\s()+-]+$/, "WhatsApp deve conter apenas números"),
+  gender: z.enum(["male", "female", "other", "prefer-not-say"], {
+    required_error: "Selecione seu gênero",
+  }),
+  age: z.string()
+    .min(1, "Idade é obrigatória")
+    .refine((val) => {
+      const num = parseInt(val);
+      return !isNaN(num) && num >= 18 && num <= 120;
+    }, "Idade deve ser entre 18 e 120 anos"),
   crm: z.enum(["hubspot", "pipedrive", "rdstation", "salesforce", "outro"], {
     required_error: "Selecione seu CRM",
   }),
@@ -39,7 +50,17 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formStartTracked, setFormStartTracked] = useState(false);
+  const visitIdRef = useRef<string | null>(null);
   const { toast } = useToast();
+
+  // Obter visitId do sessionStorage
+  useEffect(() => {
+    const storedVisitId = sessionStorage.getItem('current_visit_id');
+    if (storedVisitId) {
+      visitIdRef.current = storedVisitId;
+    }
+  }, []);
   
   const {
     register,
@@ -55,26 +76,38 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
 
   const watchedValues = watch();
 
-  // Validação em tempo real
+  // Validação em tempo real e tracking de início de formulário
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name && touchedFields.has(name)) {
         trigger(name as keyof FormData);
       }
+
+      // Rastrear início de formulário quando primeiro campo é preenchido
+      if (!formStartTracked && name && value[name] && visitIdRef.current) {
+        trackFormStart(visitIdRef.current);
+        setFormStartTracked(true);
+      }
     });
     return () => subscription.unsubscribe();
-  }, [watch, trigger, touchedFields]);
+  }, [watch, trigger, touchedFields, formStartTracked]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
     try {
       // Mapear os dados para o formato esperado pelo webhook
+      const genderLabel = data.gender === "male" ? "Masculino" : 
+                         data.gender === "female" ? "Feminino" :
+                         data.gender === "other" ? "Outro" : "Prefiro não informar";
+      
       const webhookData = {
         "Nome completo": data.name,
         "E-mail profissional": data.email,
         "Empresa": data.company || "Não informado",
         "WhatsApp": data.phone,
+        "Gênero": genderLabel,
+        "Idade": data.age,
         "Qual o seu CRM": data.crm === "hubspot" ? "HubSpot" : 
                           data.crm === "pipedrive" ? "Pipedrive" :
                           data.crm === "rdstation" ? "RD Station" :
@@ -102,9 +135,30 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
         setTouchedFields(new Set());
       }
 
-      // Obter localização do usuário para a notificação
-      const location = getCachedLocation();
+      // Obter localização do usuário para a notificação e tracking
+      let location = getCachedLocation();
+      if (!location) {
+        location = await fetchVisitorLocation();
+      }
       const cidade = location ? formatLocation(location) : "São Paulo, SP";
+
+      // Obter dados do dispositivo
+      const deviceData = getDeviceData();
+
+      // Rastrear conclusão de formulário
+      if (visitIdRef.current) {
+        trackFormCompletion(
+          visitIdRef.current,
+          deviceData,
+          location ? {
+            city: location.city,
+            region: location.region,
+            country: location.country,
+          } : undefined,
+          data.gender,
+          parseInt(data.age)
+        );
+      }
 
       // Disparar notificação de inscrição imediatamente
       triggerInscriptionNotification(data.name, cidade);
@@ -230,10 +284,94 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
           <div className="relative">
             <Input
               id="company"
-              placeholder="Nome da sua empresa (ajuda a personalizar o conteúdo)"
+              placeholder="Nome da sua empresa"
               {...register("company")}
               className="h-12 text-base focus-visible:ring-primary"
             />
+          </div>
+        </div>
+
+        {/* Gênero e Idade - Grid 2 colunas */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Gênero */}
+          <div className="space-y-2">
+            <Label className="text-card-foreground font-semibold text-sm">Gênero</Label>
+            <RadioGroup
+              onValueChange={(value) => setValue("gender", value as "male" | "female" | "other" | "prefer-not-say")}
+              className="grid grid-cols-2 gap-2"
+            >
+              {[
+                { value: "male", label: "Masculino" },
+                { value: "female", label: "Feminino" },
+                { value: "other", label: "Outro" },
+                { value: "prefer-not-say", label: "Não informar" }
+              ].map((option) => (
+                <div
+                  key={option.value}
+                  className={`flex items-center space-x-2 p-3 rounded-lg border-2 transition-all cursor-pointer hover:bg-primary/5 ${
+                    watch("gender") === option.value
+                      ? "border-primary bg-primary/10"
+                      : "border-border hover:border-primary/50"
+                  }`}
+                  onClick={() => setValue("gender", option.value as any)}
+                >
+                  <RadioGroupItem
+                    value={option.value}
+                    id={`gender-${option.value}`}
+                    className="flex-shrink-0"
+                  />
+                  <Label htmlFor={`gender-${option.value}`} className="font-medium cursor-pointer text-xs flex-1">
+                    {option.label}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+            {errors.gender && (
+              <p className="text-destructive text-sm flex items-center gap-1">
+                <span>⚠️</span> {errors.gender.message}
+              </p>
+            )}
+          </div>
+
+          {/* Idade */}
+          <div className="space-y-2">
+            <Label htmlFor="age" className="text-card-foreground font-semibold text-sm">
+              Idade
+            </Label>
+            <div className="relative">
+              <Input
+                id="age"
+                type="number"
+                placeholder="Ex: 35"
+                {...register("age", {
+                  onBlur: () => setTouchedFields(prev => new Set(prev).add("age")),
+                })}
+                className={`h-11 sm:h-12 text-base pr-10 transition-all ${
+                  errors.age 
+                    ? "border-destructive focus-visible:ring-destructive" 
+                    : watchedValues.age && parseInt(watchedValues.age) >= 18 && parseInt(watchedValues.age) <= 120
+                    ? "border-accent focus-visible:ring-accent"
+                    : "focus-visible:ring-primary"
+                }`}
+                min="18"
+                max="120"
+              />
+              {watchedValues.age && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {errors.age ? (
+                    <XCircle className="w-5 h-5 text-destructive animate-scale-in" />
+                  ) : parseInt(watchedValues.age) >= 18 && parseInt(watchedValues.age) <= 120 ? (
+                    <CheckCircle2 className="w-5 h-5 text-accent animate-scale-in" />
+                  ) : null}
+                </div>
+              )}
+            </div>
+            {errors.age && touchedFields.has("age") && (
+              <p className="text-destructive text-sm flex items-center gap-1 animate-fade-in-up">
+                <XCircle className="w-4 h-4" />
+                {errors.age.message}
+              </p>
+            )}
           </div>
         </div>
 

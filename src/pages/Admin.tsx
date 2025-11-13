@@ -15,6 +15,7 @@ import {
 } from "@/utils/adminConfig";
 import { Lock, Calendar, BarChart3, Save, Eye, EyeOff } from "lucide-react";
 import LightRays from "@/components/LightRays";
+import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -215,8 +216,12 @@ const Admin = () => {
           </Button>
         </div>
 
-        <Tabs defaultValue="webinar" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="analytics" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              Analytics
+            </TabsTrigger>
             <TabsTrigger value="webinar" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Webinar
@@ -226,6 +231,11 @@ const Admin = () => {
               Tracking
             </TabsTrigger>
           </TabsList>
+
+          {/* Tab: Analytics */}
+          <TabsContent value="analytics">
+            <AnalyticsDashboard />
+          </TabsContent>
 
           {/* Tab: Configurações do Webinar */}
           <TabsContent value="webinar">
