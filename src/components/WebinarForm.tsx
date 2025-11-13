@@ -163,6 +163,9 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
       // Disparar notificação de inscrição imediatamente
       triggerInscriptionNotification(data.name, cidade);
 
+      // Atualizar URL para /obrigado sem recarregar a página
+      window.history.pushState({}, '', '/obrigado');
+
       // Mostrar modal de sucesso
       setShowSuccessModal(true);
 
