@@ -13,6 +13,7 @@ import { triggerInscriptionNotification } from "@/utils/inscriptionEvents";
 import { getCachedLocation, formatLocation, fetchVisitorLocation } from "@/utils/geolocation";
 import { trackFormStart, trackFormCompletion } from "@/utils/analytics";
 import { getDeviceData } from "@/utils/deviceDetection";
+import { trackLeadConfirmado } from "@/utils/metaPixel";
 
 const formSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres").max(100),
@@ -159,6 +160,9 @@ export const WebinarForm = ({ onSuccess, hideHeader = false }: WebinarFormProps)
           parseInt(data.age)
         );
       }
+
+      // Disparar evento do Meta Pixel "Lead Confirmado"
+      trackLeadConfirmado();
 
       // Disparar notificação de inscrição imediatamente
       triggerInscriptionNotification(data.name, cidade);

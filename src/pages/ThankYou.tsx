@@ -1,8 +1,15 @@
+import { useEffect } from "react";
 import { ThankYouContent } from "@/components/ThankYouContent";
 import LightRays from "@/components/LightRays";
 import LetterGlitch from "@/components/LetterGlitch";
+import { trackLeadConfirmado } from "@/utils/metaPixel";
 
 const ThankYou = () => {
+  // Disparar evento do Meta Pixel ao carregar a página
+  useEffect(() => {
+    trackLeadConfirmado();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/95 to-primary-light relative overflow-hidden">
       {/* Letter Glitch Effect - Background decorativo */}

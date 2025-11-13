@@ -490,3 +490,4 @@ export const calculateAgeDistribution = (period: Period): AgeDistribution[] => {
   return distribution;
 };
 
+
