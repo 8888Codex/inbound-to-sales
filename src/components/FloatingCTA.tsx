@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { trackCTAClick } from "@/utils/eventTracking";
 
 export const FloatingCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,6 +21,9 @@ export const FloatingCTA = () => {
   }, [isDismissed]);
 
   const handleClick = () => {
+    // Rastrear clique no CTA flutuante
+    trackCTAClick('Floating CTA - Inscrever-se', 'Floating Button');
+    
     // No mobile, dispara evento para abrir o dialog
     if (window.innerWidth < 1024) {
       window.dispatchEvent(new CustomEvent('openWebinarFormDialog'));

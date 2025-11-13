@@ -4,6 +4,7 @@ import leadsGapChart from "@/assets/leads-gap-chart.png";
 import { ArrowDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import LetterGlitch from "./LetterGlitch";
+import { trackCTAClick } from "@/utils/eventTracking";
 import {
   Dialog,
   DialogContent,
@@ -49,15 +50,22 @@ export const Hero = () => {
       const target = e.target as HTMLElement;
       const link = target.closest('a[href="#webinar-form"]');
       
-      if (link && window.innerWidth < 1024) { // lg breakpoint
-        e.preventDefault();
-        e.stopPropagation();
-        setIsFormDialogOpen(true);
+      if (link) {
+        // Rastrear clique no CTA
+        const linkText = link.textContent?.trim() || 'CTA Link';
+        trackCTAClick(linkText, 'Page');
+        
+        if (window.innerWidth < 1024) { // lg breakpoint
+          e.preventDefault();
+          e.stopPropagation();
+          setIsFormDialogOpen(true);
+        }
       }
     };
 
     // Listener para evento customizado do FloatingCTA
     const handleCustomEvent = () => {
+      trackCTAClick('Floating CTA', 'Floating Button');
       setIsFormDialogOpen(true);
     };
 

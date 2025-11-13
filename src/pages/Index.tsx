@@ -11,6 +11,7 @@ import { FloatingCTA } from "@/components/FloatingCTA";
 import { InscricaoNotification } from "@/components/InscricaoNotification";
 import { TrackingScripts } from "@/components/TrackingScripts";
 import { usePageTracking } from "@/hooks/usePageTracking";
+import { initScrollTracking } from "@/utils/eventTracking";
 
 const Index = () => {
   const visitId = usePageTracking();
@@ -21,6 +22,12 @@ const Index = () => {
       sessionStorage.setItem('current_visit_id', visitId);
     }
   }, [visitId]);
+
+  // Inicializar tracking de scroll
+  useEffect(() => {
+    const cleanup = initScrollTracking();
+    return cleanup;
+  }, []);
 
   return (
     <main className="min-h-screen">
